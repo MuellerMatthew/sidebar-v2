@@ -93,7 +93,7 @@ L.Control.Sidebar = L.Control.extend({
             disabled = this._getDisabledTabs(); //getting list of disabled tabs
             
         for(i = disabled.length-1; i>=0; i--) {
-            if(disabled[i].firstChild.hash ==='#' + id)
+            if(disabled[i].querySelector('a').hash ==='#' + id)
                 return this;                        //if the tab is disabled, then do not try to open it.  
         }
 
@@ -150,7 +150,7 @@ L.Control.Sidebar = L.Control.extend({
             id  = id ? this._getTab(id) : this._tabitems; //if no id is passed, it will enable all disabled tabs
 
         for (i = id.length-1; i>=0; i--) {    
-            child = id[i].firstChild;
+            child = id[i].querySelector('a');
             L.DomUtil.addClass(child, 'disabled'); //if the tab is disabled, then enable it.                       
        }
         return this;
@@ -161,7 +161,7 @@ L.Control.Sidebar = L.Control.extend({
             id = id ? this._getTab(id) : this._getDisabledTabs(); //if no id is passed, it will enable all disabled tabs
 
         for (i = id.length-1; i>=0; i--) {    
-            child = id[i].firstChild;
+            child = id[i].querySelector('a');
             L.DomUtil.removeClass(child, 'disabled'); //if the tab is disabled, then enable it.                       
        }
         return this;
@@ -186,7 +186,7 @@ L.Control.Sidebar = L.Control.extend({
         for (var i = this._tabitems.length - 1; i >= 0; i--) {
             var child = this._tabitems[i];  
             for( var j = id.length-1; j >=0; j--) {
-                if (child.firstChild.hash === "#"+id[j]) {
+                if (child.querySelector('a').hash === "#"+id[j]) {
                    children.push(child);
                 }
            }
@@ -206,7 +206,7 @@ L.Control.Sidebar = L.Control.extend({
         var tabs=[];
         for (var i = this._tabitems.length - 1; i >= 0; i--) {
             var tab = this._tabitems[i],
-                child = tab.firstChild;
+                child = tab.querySelector('a');
             if (L.DomUtil.hasClass(child, 'disabled')){
                tabs.push(tab);
             }

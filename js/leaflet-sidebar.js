@@ -105,8 +105,10 @@ L.Control.Sidebar = L.Control.extend({
                 for (i = this._panes.length - 1; i >= 0; i--) {  
                     if (child.id == id)
                         L.DomUtil.addClass(child, 'active');
-                    else if (L.DomUtil.hasClass(child, 'active'))
+                    else if (L.DomUtil.hasClass(child, 'active')) {
                         L.DomUtil.removeClass(child, 'active');
+                        this.fire('tab-closed', {id: child.id });
+                    }
                 }
 
                 // remove old active highlights and set new highlight
@@ -118,7 +120,7 @@ L.Control.Sidebar = L.Control.extend({
                         L.DomUtil.removeClass(child, 'active');
                 }
 
-                this.fire('content', { id: id });
+                this.fire('tab-opened', { id: id });
         
                 // open sidebar (if necessary)
                 if (L.DomUtil.hasClass(this._sidebar, 'collapsed')) {
@@ -133,8 +135,9 @@ L.Control.Sidebar = L.Control.extend({
 
     close: function() {
         // remove old active highlights
-        L.DomUtil.removeClass(this._getActiveTab(), 'active');
-
+        var tab = this._getActiveTab();
+        L.DomUtil.removeClass(tab, 'active');
+        this.fire('tab-closed', { id: tab.id });
 
         // close sidebar
         if (!L.DomUtil.hasClass(this._sidebar, 'collapsed')) {
